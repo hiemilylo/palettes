@@ -1,14 +1,14 @@
 function readURL(input) {
        if (input.files && input.files[0]) {
            var reader = new FileReader();
-
            reader.onload = function (e) {
                $('#original')
                    .attr('src', e.target.result)
                    .width(150)
                    .height(200);
            };
-
+           var x = input.files[0].size;
+           console.log(x);
            reader.readAsDataURL(input.files[0]);
        }
    }
