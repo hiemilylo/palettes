@@ -16,8 +16,8 @@ import java.util.List; // resolves problem with java.awt.List and java.util.List
  * @author Period: 4
  * @author Assignment: APCSPixLab - IntArrayWorker
  *
- * @author Sources: 
- * 
+ * @author Sources:
+ *
  * @author Barbara Ericson ericson@cc.gatech.edu
  */
 public class Picture extends SimplePicture
@@ -39,7 +39,7 @@ public class Picture extends SimplePicture
 
     /**
      * Constructor that takes a file name and creates the picture
-     * 
+     *
      * @param fileName
      *            the name of the file to create the picture from
      */
@@ -52,7 +52,7 @@ public class Picture extends SimplePicture
 
     /**
      * Constructor that takes the width and height
-     * 
+     *
      * @param height
      *            the height of the desired picture
      * @param width
@@ -67,7 +67,7 @@ public class Picture extends SimplePicture
 
     /**
      * Constructor that takes a picture and creates a copy of that picture
-     * 
+     *
      * @param copyPicture
      *            the picture to copy
      */
@@ -80,7 +80,7 @@ public class Picture extends SimplePicture
 
     /**
      * Constructor that takes a buffered image
-     * 
+     *
      * @param image
      *            the buffered image to use
      */
@@ -94,7 +94,7 @@ public class Picture extends SimplePicture
 
     /**
      * Method to return a string with information about this picture.
-     * 
+     *
      * @return a string with information about the picture such as fileName,
      *         height and width.
      */
@@ -347,7 +347,7 @@ public class Picture extends SimplePicture
                 rightPixel = pixels[col][row];
                 rightPixel.setColor( leftPixel.getColor() );
             }
-        }   
+        }
     }
 
 
@@ -435,7 +435,7 @@ public class Picture extends SimplePicture
     /**
      * copy from the passed fromPic to the specified startRow and startCol in
      * the current picture
-     * 
+     *
      * @param fromPic
      *            the picture to copy from
      * @param startRow
@@ -486,7 +486,7 @@ public class Picture extends SimplePicture
     /**
      * copy from the passed fromPic to the specified startRow and startCol in
      * the current picture
-     * 
+     *
      * @param fromPic
      *            the picture to copy from
      * @param fromStartRow
@@ -531,7 +531,7 @@ public class Picture extends SimplePicture
 
     /**
      * Method to show large changes in color
-     * 
+     *
      * @param edgeDist
      *            the distance for finding edges
      */
@@ -563,7 +563,7 @@ public class Picture extends SimplePicture
 
     /**
      * Method to show large changes in color
-     * 
+     *
      * @param edgeDist
      *            the distance for finding edges
      */
@@ -595,7 +595,7 @@ public class Picture extends SimplePicture
                 }
             }
         }
-        
+
         Pixel[][] copyPixels = copy.getPixels2D();
         Pixel topPixel = null;
         Pixel bottomPixel = null;
@@ -623,7 +623,7 @@ public class Picture extends SimplePicture
     /**
      * Method to replace the blue background with the pixels in the newBack
      * picture
-     * 
+     *
      * @param newBack
      *            the picture to copy from
      */
@@ -651,7 +651,7 @@ public class Picture extends SimplePicture
     /**
      * Hide a black and white message in the current picture by changing the red
      * to even and then setting it to odd if the message pixel is black
-     * 
+     *
      * @param messagePict
      *            the picture with a message
      */
@@ -685,7 +685,7 @@ public class Picture extends SimplePicture
 
     /**
      * Method to decode a message hidden in the red value of the current picture
-     * 
+     *
      * @return the picture with the hidden message
      */
     public Picture decode()
@@ -719,7 +719,7 @@ public class Picture extends SimplePicture
     /**
      * Method to return the count of the number of pixels with a red value
      * greater than the passed value
-     * 
+     *
      * @param value
      *            the value to compare to
      * @return the count
@@ -765,7 +765,7 @@ public class Picture extends SimplePicture
 
     /**
      * Method to clear the blue (set to 0) if it is over the passed value
-     * 
+     *
      * @param value
      *            the value to compare to
      */
@@ -785,7 +785,7 @@ public class Picture extends SimplePicture
             }
         }
     }
-    
+
     public void addBar( int x , int y )
     {
         Pixel[][] pixels = this.getPixels2D();
@@ -794,7 +794,7 @@ public class Picture extends SimplePicture
         int blue = currPixel.getBlue();
         int green = currPixel.getGreen();
         for ( int row = 100; row < 150; row++ )
-        {  
+        {
             for ( int col = pixels[0].length/3; col < pixels[0].length*2/3; col++ )
             {
                 pixels[row][col].setRed( red );
@@ -802,19 +802,36 @@ public class Picture extends SimplePicture
                 pixels[row][col].setGreen( green );
             }
         }
-        
+
     }
-    
-    public void addBar( int x )
+
+    public void addBar( int rows )
     {
         Pixel[][] pixels = this.getPixels2D();
-        
+        int dividor = rows + 1;
+        for ( int numBar = 0; numBar < rows; numBar++ )
+        {
+          Pixel currPixel = pixels[pixels.length * (numBar+1)/dividor][pixels[0].length/2];
+          int red = currPixel.getRed();
+          int blue = currPixel.getBlue();
+          int green = currPixel.getGreen();
+          for ( int row = pixels.length * (numBar+1) /divddor - 25; row <
+          pixels.length * (numBar+1) /dividor + 25; row++ )
+          {
+            for ( int col = pixels[0].length/3; col < pixels[0].length*2/3; col++ )
+            {
+              pixels[row][col].setRed( red );
+              pixels[row][col].setBlue( blue );
+              pixels[row][col].setGreen( green );
+            }
+          }
+        }
     }
 
 
     /**
      * Method to return the average value for the specified column
-     * 
+     *
      * @param col
      *            the column index to get the average from
      * @return the average of the values in that column
