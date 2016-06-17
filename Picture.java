@@ -241,26 +241,6 @@ public class Picture extends SimplePicture
         }
     }
 
-
-    /**
-     * Method to create a collage of several pictures
-     */
-    public void createCollage()
-    {
-        Picture flower1 = new Picture( "flower1.jpg" );
-        Picture flower2 = new Picture( "flower2.jpg" );
-        this.copy( flower1, 0, 0 );
-        this.copy( flower2, 100, 0 );
-        this.copy( flower1, 200, 0 );
-        Picture flowerNoBlue = new Picture( flower2 );
-        flowerNoBlue.zeroBlue();
-        this.copy( flowerNoBlue, 300, 0 );
-        this.copy( flower1, 400, 0 );
-        this.copy( flower2, 500, 0 );
-        this.mirrorVertical();
-        this.write( "collage.jpg" );
-    }
-
     public void addBar( int x , int y )
     {
         Pixel[][] pixels = this.getPixels2D();
@@ -284,16 +264,17 @@ public class Picture extends SimplePicture
     {
         Pixel[][] pixels = this.getPixels2D();
         int dividor = rows + 1;
+        int thickness = pixels.length/30;
         for ( int numBar = 0; numBar < rows; numBar++ )
         {
           Pixel currPixel = pixels[pixels.length * (numBar+1)/dividor][pixels[0].length/2];
           int red = currPixel.getRed();
           int blue = currPixel.getBlue();
           int green = currPixel.getGreen();
-          for ( int row = pixels.length * (numBar+1) /dividor - 25; row <
-          pixels.length * (numBar+1) /dividor + 25; row++ )
+          for ( int row = pixels.length * (numBar+1) /dividor - thickness; row <
+          pixels.length * (numBar+1) /dividor + thickness; row++ )
           {
-            for ( int col = pixels[0].length/3; col < pixels[0].length*2/3; col++ )
+            for ( int col = pixels[0].length/2 - 50 ; col < pixels[0].length/2 + 50; col++ )
             {
               pixels[row][col].setRed( red );
               pixels[row][col].setBlue( blue );
@@ -340,4 +321,4 @@ public class Picture extends SimplePicture
         beach.explore();
     }
 
-} // this } is the end of class Picture, put all new methods before this
+}
