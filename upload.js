@@ -34,8 +34,16 @@ function readURL(input) {
                       c2.style.display = 'block';
                    }
 
+                   c.style.display = 'inline';
+                   document.getElementById("cButton").style.display = 'inline';
+
                    ctx2.drawImage(img, 0, 0, imgWidth, imgHeight);
            };
            reader.readAsDataURL(input.files[0]);
+
        }
    }
+
+function createImage() {
+    console.log("clicked");
+}

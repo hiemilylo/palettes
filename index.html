@@ -9,9 +9,11 @@
   <p> Select desired image. </p>
   <input type='file' onchange="readURL(this);"> <br> <br>
     <canvas id = "origCanvas"
-      style="border:1px solid #000000;"> </canvas> 
+      style="border:1px solid #000000; display: none;"> </canvas>
     <canvas id = "newCanvas"
-        style="border:1px solid #000000;"> </canvas>
+      style="border:1px solid #000000; display: none;"> </canvas>
+    <button id = "cButton" onclick = "createImage()"
+      style="display: none;">click</button>
     <script src = upload.js></script>
 </body>
 </html>
