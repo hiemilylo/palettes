@@ -10,7 +10,7 @@ function readURL(input) {
                    img.src = e.target.result;
                    var imgWidth = img.width;
                    var imgHeight = img.height;
-                   while ( imgWidth > screen.width - 100 || imgHeight > screen.height - 100 ){
+                   while ( imgWidth > screen.width - 100 || imgHeight > screen.height - 200 ){
                       imgWidth = parseInt(imgWidth*9/10);
                       imgHeight = parseInt(imgHeight*9/10);
                       // console.log(imgWidth + " " + maxWidth );
@@ -44,25 +44,29 @@ function readURL(input) {
        }
    }
 
-function createImage() {
+function createImage(numBars) {
     console.log("clicked");
     var c = document.getElementById("newCanvas");
     var ctx = c.getContext("2d");
     var spacing = 4;
-    var rows = 6;
+    var rows = numBars;
     var widthBar = 75;
     var heightBar = parseInt(c.height/30);
     var topX = parseInt(c.width/2) - parseInt(widthBar/2);
     var topY = parseInt(c.height/(rows + spacing));
-    for ( var x = 2; x < rows + (spacing-1); x++ ){
+    var colors = [];
+    for ( var x = 2; x < rows + 2; x++ ){
       var imgData = ctx.getImageData(topX, topY*x + parseInt(widthBar/2), 1, 1);
       var red = imgData.data[0];
       var green = imgData.data[1];
       var blue = imgData.data[2];
       var hex = rgbToHex( red, green, blue );
-      console.log( "red: " + red + " green: " + green + " blue: " + blue + " hex: " + hex );
-      ctx.fillStyle = "" + hex;
-      ctx.fillRect( topX, topY*x, widthBar, heightBar );
+      colors[x - 2] = hex;
+    }
+    colors.sort();
+    for ( var j = 2; j < rows + 2; j++ ){
+      ctx.fillStyle = "#" + colors[j-2];
+      ctx.fillRect( topX, topY*j, widthBar, heightBar );
     }
     // Pixel[][] pixels = this.getPixels2D();
     // int dividor = rows + 1;
@@ -92,5 +96,5 @@ function componentToHex(c) {
 }
 
 function rgbToHex(r, g, b) {
-    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    return componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
