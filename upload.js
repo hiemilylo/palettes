@@ -48,7 +48,15 @@ function createImage() {
     console.log("clicked");
     var c = document.getElementById("newCanvas");
     var ctx = c.getContext("2d");
-    ctx.fillRect(10,10,100,50);
+    var spacing = 4;
+    var rows = 6;
+    var widthBar = 100;
+    var heightBar = parseInt(c.height/30);
+    var topX = parseInt(c.width/2) - 50;
+    var topY = parseInt(c.height/(rows + spacing));
+    for ( var x = 2; x < rows + (spacing-1); x++ ){
+      ctx.fillRect( topX, topY*x, widthBar, heightBar );
+    }
     // Pixel[][] pixels = this.getPixels2D();
     // int dividor = rows + 1;
     // int thickness = pixels.length/30;
