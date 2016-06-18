@@ -50,11 +50,18 @@ function createImage() {
     var ctx = c.getContext("2d");
     var spacing = 4;
     var rows = 6;
-    var widthBar = 100;
+    var widthBar = 75;
     var heightBar = parseInt(c.height/30);
-    var topX = parseInt(c.width/2) - 50;
+    var topX = parseInt(c.width/2) - parseInt(widthBar/2);
     var topY = parseInt(c.height/(rows + spacing));
     for ( var x = 2; x < rows + (spacing-1); x++ ){
+      var imgData = ctx.getImageData(topX, topY*x + parseInt(widthBar/2), 1, 1);
+      var red = imgData.data[0];
+      var green = imgData.data[1];
+      var blue = imgData.data[2];
+      var hex = rgbToHex( red, green, blue );
+      console.log( "red: " + red + " green: " + green + " blue: " + blue + " hex: " + hex );
+      ctx.fillStyle = "" + hex;
       ctx.fillRect( topX, topY*x, widthBar, heightBar );
     }
     // Pixel[][] pixels = this.getPixels2D();
@@ -77,4 +84,13 @@ function createImage() {
     //     }
     //   }
     // }
+}
+
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
