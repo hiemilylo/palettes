@@ -35,17 +35,26 @@ function readURL(input) {
                    }
 
                    c.style.display = 'inline';
-                   document.getElementById("cButton").style.display = 'block';
+                   for ( var i = 1; i < 4; i++ ){
+                      document.getElementById("cButton" + i).style.display = 'inline';
+                   }
 
                    ctx2.drawImage(img, 0, 0, imgWidth, imgHeight);
            };
            reader.readAsDataURL(input.files[0]);
-
        }
    }
 
+function resetCanvas(){
+    var c = document.getElementById("origCanvas");
+    var ctx = c.getContext("2d");
+    var c2 = document.getElementById("newCanvas");
+    var ctx2 = c2.getContext("2d");
+    ctx2.putImageData(ctx.getImageData(0,0,c.width,c.height), 0, 0);
+}
+
 function createImage(numBars) {
-    console.log("clicked");
+    resetCanvas();
     var c = document.getElementById("newCanvas");
     var ctx = c.getContext("2d");
     var spacing = 4;
