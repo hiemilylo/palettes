@@ -13,8 +13,8 @@ function readURL(input) {
                    while ( imgWidth > screen.width - 100 || imgHeight > screen.height - 100 ){
                       imgWidth = parseInt(imgWidth*9/10);
                       imgHeight = parseInt(imgHeight*9/10);
-                      console.log(imgWidth + " " + maxWidth );
-                      console.log(imgHeight + " " + maxHeight );
+                      // console.log(imgWidth + " " + maxWidth );
+                      // console.log(imgHeight + " " + maxHeight );
                    }
                    img.width = ""  + imgWidth;
                    img.height = "" + imgHeight;
@@ -35,7 +35,7 @@ function readURL(input) {
                    }
 
                    c.style.display = 'inline';
-                   document.getElementById("cButton").style.display = 'inline';
+                   document.getElementById("cButton").style.display = 'block';
 
                    ctx2.drawImage(img, 0, 0, imgWidth, imgHeight);
            };
@@ -46,4 +46,27 @@ function readURL(input) {
 
 function createImage() {
     console.log("clicked");
+    var c = document.getElementById("newCanvas");
+    var ctx = c.getContext("2d");
+    ctx.fillRect(10,10,100,50);
+    // Pixel[][] pixels = this.getPixels2D();
+    // int dividor = rows + 1;
+    // int thickness = pixels.length/30;
+    // for ( int numBar = 0; numBar < rows; numBar++ )
+    // {
+    //   Pixel currPixel = pixels[pixels.length * (numBar+1)/dividor][pixels[0].length/2];
+    //   int red = currPixel.getRed();
+    //   int blue = currPixel.getBlue();
+    //   int green = currPixel.getGreen();
+    //   for ( int row = pixels.length * (numBar+1) /dividor - thickness; row <
+    //   pixels.length * (numBar+1) /dividor + thickness; row++ )
+    //   {
+    //     for ( int col = pixels[0].length/2 - 50 ; col < pixels[0].length/2 + 50; col++ )
+    //     {
+    //       pixels[row][col].setRed( red );
+    //       pixels[row][col].setBlue( blue );
+    //       pixels[row][col].setGreen( green );
+    //     }
+    //   }
+    // }
 }
