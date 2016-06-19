@@ -8,16 +8,20 @@
 <body>
   <p> Select desired image. </p>
   <input type='file' onchange="readURL(this);"> <br> <br>
-    <canvas id = "origCanvas"
-      style="border:1px solid #000000; display: none;"> </canvas>
-    <canvas id = "newCanvas"
-      style="border:1px solid #000000; display: none;"> </canvas>
-    <button id = "cButton1" onclick = "createImage(6)"
-      style="display: none;">6</button>
-    <button id = "cButton2" onclick = "createImage(7)"
-      style="display: none;">7</button>
-    <button id = "cButton3" onclick = "createImage(8)"
-      style="display: none;">8</button>
+    <div id = interface>
+      <canvas id = "origCanvas"
+        style="border:1px solid #000000; display: none;"> </canvas>
+      <canvas id = "newCanvas"
+        style="border:1px solid #000000; display: none;"> </canvas> <br><br>
+    </div>
+    <div id = "selections" style = "display: none;">
+      <input type="radio" name = "align" id="align1" value="middle" checked> Middle
+      <input type="radio" name = "align" id="align2" value="left"> Left
+      <input type="radio" name = "align" id="align3" value="right"> Right <br>
+      <button id = "cButton1" onclick = "createImage(6)">6</button>
+      <button id = "cButton2" onclick = "createImage(7)">7</button>
+      <button id = "cButton3" onclick = "createImage(8)">8</button>
+    </div>
     <script src = upload.js></script>
 </body>
 </html>

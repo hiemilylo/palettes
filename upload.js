@@ -28,16 +28,14 @@ function readURL(input) {
                    var ctx2 = c2.getContext("2d");
 
                    if ( imgHeight > imgWidth ){
-                      c2.style.display = 'inline';
+                      $("#newCanvas").css("display", "inline");
                    }
                    else{
-                      c2.style.display = 'block';
+                     $("#newCanvas").css("display", "block");
                    }
 
-                   c.style.display = 'inline';
-                   for ( var i = 1; i < 4; i++ ){
-                      document.getElementById("cButton" + i).style.display = 'inline';
-                   }
+                   $("#origCanvas").css("display", "inline");
+                   $("#selections").css("display", "inline");
 
                    ctx2.drawImage(img, 0, 0, imgWidth, imgHeight);
            };
@@ -64,6 +62,7 @@ function createImage(numBars) {
     var topX = parseInt(c.width/2) - parseInt(widthBar/2);
     var topY = parseInt(c.height/(rows + spacing));
     var colors = [];
+    //color selection
     for ( var x = 2; x < rows + 2; x++ ){
       var imgData = ctx.getImageData(topX, topY*x + parseInt(widthBar/2), 1, 1);
       var red = imgData.data[0];
@@ -73,9 +72,25 @@ function createImage(numBars) {
       colors[x - 2] = hex;
     }
     colors.sort();
+
+    var decrement = 0;
+    //alignment
+    for ( var k = 1; k < 4; k++ ){
+        if (document.getElementById("align" + k).checked){
+            if (k == 2 ){ //Left
+              topX = 1;
+              decrement = parseInt(c.height/(rows + spacing));
+            }
+            if (k == 3){ //Right
+              topX = c.width - widthBar;
+              decrement = parseInt(c.height/(rows + spacing));
+            }
+        }
+    }
+
     for ( var j = 2; j < rows + 2; j++ ){
       ctx.fillStyle = "#" + colors[j-2];
-      ctx.fillRect( topX, topY*j, widthBar, heightBar );
+      ctx.fillRect( topX, topY*j - decrement, widthBar, heightBar );
     }
     // Pixel[][] pixels = this.getPixels2D();
     // int dividor = rows + 1;
