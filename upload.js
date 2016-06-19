@@ -5,11 +5,14 @@ function readURL(input) {
            var reader = new FileReader();
            var c = document.getElementById("origCanvas");
            var ctx = c.getContext("2d");
+
            reader.onload = function (e) {
                    var img = document.createElement("IMG");
                    img.src = e.target.result;
                    var imgWidth = img.width;
                    var imgHeight = img.height;
+
+                   //adjusting images too large
                    while ( imgWidth > screen.width - 100 || imgHeight > screen.height - 200 ){
                       imgWidth = parseInt(imgWidth*9/10);
                       imgHeight = parseInt(imgHeight*9/10);
@@ -20,13 +23,17 @@ function readURL(input) {
                    img.height = "" + imgHeight;
                    c.width = ""  + imgWidth;
                    c.height = "" + imgHeight;
+                   //original picture on left or top
                    ctx.drawImage(img, 0, 0, imgWidth, imgHeight);
 
+                   //copying image on to second canvas
                    var c2 = document.getElementById("newCanvas");
                    c2.width = ""  + imgWidth;
                    c2.height = "" + imgHeight;
                    var ctx2 = c2.getContext("2d");
+                   ctx2.drawImage(img, 0, 0, imgWidth, imgHeight);
 
+                   //horizontal/portrait orientation
                    if ( imgHeight > imgWidth ){
                       $("#newCanvas").css("display", "inline");
                    }
@@ -34,16 +41,15 @@ function readURL(input) {
                      $("#newCanvas").css("display", "block");
                    }
 
+                  //canvas and options appear
                    $("#origCanvas").css("display", "inline");
                    $("#selections").css("display", "inline");
-
-                   ctx2.drawImage(img, 0, 0, imgWidth, imgHeight);
            };
            reader.readAsDataURL(input.files[0]);
        }
    }
 
-function resetCanvas(){
+function resetCanvas(){ //re-copying original image on to new canvas
     var c = document.getElementById("origCanvas");
     var ctx = c.getContext("2d");
     var c2 = document.getElementById("newCanvas");
@@ -52,31 +58,56 @@ function resetCanvas(){
 }
 
 function createImage(numBars) {
-    resetCanvas();
+    resetCanvas(); //erasing previous bars
+
     var c = document.getElementById("newCanvas");
     var ctx = c.getContext("2d");
     var spacing = 4;
     var rows = numBars;
     var widthBar = 75;
     var heightBar = parseInt(c.height/30);
-    var topX = parseInt(c.width/2) - parseInt(widthBar/2);
-    var topY = parseInt(c.height/(rows + spacing));
+    var topX, topY = 0;
+    if ( isLandscape() ) {
+      topX = parseInt(c.width/(rows + spacing));
+      topY = parseInt(c.height/2) - parseInt(widthBar/2);
+    }
+    else {
+      topX = parseInt(c.width/2) - parseInt(widthBar/2);
+      topY = parseInt(c.height/(rows + spacing));
+    }
     var colors = [];
+
     //color selection
     for ( var x = 2; x < rows + 2; x++ ){
-      var imgData = ctx.getImageData(topX, topY*x + parseInt(widthBar/2), 1, 1);
+      if ( isLandscape() ){
+        var imgData = ctx.getImageData(topX*x + parseInt(widthBar/2), topY, 1, 1);
+      }
+      else{
+        var imgData = ctx.getImageData(topX, topY*x + parseInt(widthBar/2), 1, 1);
+      }
       var red = imgData.data[0];
       var green = imgData.data[1];
       var blue = imgData.data[2];
       var hex = rgbToHex( red, green, blue );
       colors[x - 2] = hex;
     }
-    colors.sort();
+    colors.sort(); //dark to light order
 
     var decrement = 0;
-    //alignment
+    //alignment depengind on left, right, middle
     for ( var k = 1; k < 4; k++ ){
         if (document.getElementById("align" + k).checked){
+          if ( isLandscape() ){
+            if (k == 2 ){ //Left
+              topY = c.height - widthBar;
+              decrement = parseInt(c.width/(rows + spacing));
+            }
+            if (k == 3){ //Right
+              topY = 1;
+              decrement = parseInt(c.width/(rows + spacing));
+            }
+          }
+          else{
             if (k == 2 ){ //Left
               topX = 1;
               decrement = parseInt(c.height/(rows + spacing));
@@ -85,12 +116,22 @@ function createImage(numBars) {
               topX = c.width - widthBar;
               decrement = parseInt(c.height/(rows + spacing));
             }
+          }
         }
     }
 
-    for ( var j = 2; j < rows + 2; j++ ){
-      ctx.fillStyle = "#" + colors[j-2];
-      ctx.fillRect( topX, topY*j - decrement, widthBar, heightBar );
+    //drawing bars
+    if ( isLandscape() ){ //landscape
+      for ( var j = 2; j < rows + 2; j++ ){
+        ctx.fillStyle = "#" + colors[j-2];
+        ctx.fillRect( topX*j - decrement, topY, heightBar, widthBar );
+      }
+    }
+    else { //portrait
+      for ( var j = 2; j < rows + 2; j++ ){
+        ctx.fillStyle = "#" + colors[j-2];
+        ctx.fillRect( topX, topY*j - decrement, widthBar, heightBar );
+      }
     }
     // Pixel[][] pixels = this.getPixels2D();
     // int dividor = rows + 1;
@@ -112,6 +153,11 @@ function createImage(numBars) {
     //     }
     //   }
     // }
+}
+
+function isLandscape(){
+  c = document.getElementById("origCanvas");
+  return (c.width > c.height);
 }
 
 function componentToHex(c) {
