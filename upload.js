@@ -55,36 +55,55 @@ function readURL(input) {
        }
    }
 
-   document.addEventListener("DOMContentLoaded", init, false);
+//color selector
+ document.addEventListener("DOMContentLoaded", init, false);
 
-   function init()
+ function init()
+ {
+   var canvas = document.getElementById("newCanvas");
+   canvas.addEventListener("mousedown", getPosition, false);
+ }
+
+function getPosition(event)
+ {
+   var x = new Number();
+   var y = new Number();
+   var canvas = document.getElementById("newCanvas");
+
+   if (event.x != undefined && event.y != undefined)
    {
-     var canvas = document.getElementById("newCanvas");
-     canvas.addEventListener("mousedown", getPosition, false);
+     x = event.x;
+     y = event.y;
    }
-
-   function getPosition(event)
+   else // Firefox
    {
-     var x = new Number();
-     var y = new Number();
-     var canvas = document.getElementById("newCanvas");
-
-     if (event.x != undefined && event.y != undefined)
-     {
-       x = event.x;
-       y = event.y;
-     }
-     else // Firefox
-     {
-       x = event.clientX + document.body.scrollLeft +
-           document.documentElement.scrollLeft;
-       y = event.clientY + document.body.scrollTop +
-           document.documentElement.scrollTop;
-     }
-     x -= canvas.offsetLeft;
-     y -= canvas.offsetTop;
-     console.log("x: " + x + "  y: " + y);
+     x = event.clientX + document.body.scrollLeft +
+         document.documentElement.scrollLeft;
+     y = event.clientY + document.body.scrollTop +
+         document.documentElement.scrollTop;
    }
+   x -= canvas.offsetLeft;
+   y -= canvas.offsetTop;
+   console.log("x: " + x + "  y: " + y);
+   showColor(x, y);
+}
+
+function showColor(xCoor, yCoor){
+  var x = xCoor;
+  var y = yCoor;
+  c = document.getElementById("origCanvas");
+  ctx = c.getContext("2d");
+  var imgData = ctx.getImageData(x,y,1,1);
+  var red = imgData.data[0];
+  var green = imgData.data[1];
+  var blue = imgData.data[2];
+  var hex = rgbToHex( red, green, blue );
+
+  c2 = document.getElementById("colorSelector");
+  ctx2 = c2.getContext("2d");
+  ctx2.fillStyle="#" + hex;
+  ctx2.fillRect(0, 0, c2.width, c2.height);
+}
 
 function resetCanvas(){ //re-copying original image on to new canvas
     var c = document.getElementById("origCanvas");
