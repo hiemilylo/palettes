@@ -33,17 +33,26 @@ function readURL(input) {
                    var ctx2 = c2.getContext("2d");
                    ctx2.drawImage(img, 0, 0, imgWidth, imgHeight);
 
-                   //horizontal/portrait orientation
-                   if ( imgHeight > imgWidth ){
-                      $("#newCanvas").css("display", "inline");
-                   }
-                   else{
-                     $("#newCanvas").css("display", "block");
-                   }
-
                   //canvas and options appear
                    $("#origCanvas").css("display", "inline");
                    $("#selections").css("display", "inline");
+
+                   //horizontal/portrait orientation
+                   if ( isLandscape() ){
+                      $("#newCanvas").css("display", "block");
+                      $("#align2").append("Bottom");
+                      $("#align3").append("Top");
+                   }
+                   else{
+                     $("#newCanvas").css("display", "inline");
+                    //  var left = document.createTextNode("Left");
+                    //  document.getElementById("opt2").appendChild(left);
+                    //  var right = document.createTextNode("Right");
+                    //  document.getElementById("opt3").appendChild(right);
+                     $("#opt2").append("Left");
+                     $("#opt3").append("Right");
+                   }
+
            };
            reader.readAsDataURL(input.files[0]);
        }
