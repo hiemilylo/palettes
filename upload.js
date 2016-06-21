@@ -39,16 +39,13 @@ function readURL(input) {
 
                    //horizontal/portrait orientation
                    if ( isLandscape() ){
+                     console.log("hello");
                       $("#newCanvas").css("display", "block");
-                      $("#align2").append("Bottom");
-                      $("#align3").append("Top");
+                      $("#opt2").append("Bottom");
+                      $("#opt3").append("Top");
                    }
                    else{
                      $("#newCanvas").css("display", "inline");
-                    //  var left = document.createTextNode("Left");
-                    //  document.getElementById("opt2").appendChild(left);
-                    //  var right = document.createTextNode("Right");
-                    //  document.getElementById("opt3").appendChild(right);
                      $("#opt2").append("Left");
                      $("#opt3").append("Right");
                    }
@@ -56,6 +53,37 @@ function readURL(input) {
            };
            reader.readAsDataURL(input.files[0]);
        }
+   }
+
+   document.addEventListener("DOMContentLoaded", init, false);
+
+   function init()
+   {
+     var canvas = document.getElementById("newCanvas");
+     canvas.addEventListener("mousedown", getPosition, false);
+   }
+
+   function getPosition(event)
+   {
+     var x = new Number();
+     var y = new Number();
+     var canvas = document.getElementById("newCanvas");
+
+     if (event.x != undefined && event.y != undefined)
+     {
+       x = event.x;
+       y = event.y;
+     }
+     else // Firefox
+     {
+       x = event.clientX + document.body.scrollLeft +
+           document.documentElement.scrollLeft;
+       y = event.clientY + document.body.scrollTop +
+           document.documentElement.scrollTop;
+     }
+     x -= canvas.offsetLeft;
+     y -= canvas.offsetTop;
+     console.log("x: " + x + "  y: " + y);
    }
 
 function resetCanvas(){ //re-copying original image on to new canvas
@@ -142,26 +170,6 @@ function createImage(numBars) {
         ctx.fillRect( topX, topY*j - decrement, widthBar, heightBar );
       }
     }
-    // Pixel[][] pixels = this.getPixels2D();
-    // int dividor = rows + 1;
-    // int thickness = pixels.length/30;
-    // for ( int numBar = 0; numBar < rows; numBar++ )
-    // {
-    //   Pixel currPixel = pixels[pixels.length * (numBar+1)/dividor][pixels[0].length/2];
-    //   int red = currPixel.getRed();
-    //   int blue = currPixel.getBlue();
-    //   int green = currPixel.getGreen();
-    //   for ( int row = pixels.length * (numBar+1) /dividor - thickness; row <
-    //   pixels.length * (numBar+1) /dividor + thickness; row++ )
-    //   {
-    //     for ( int col = pixels[0].length/2 - 50 ; col < pixels[0].length/2 + 50; col++ )
-    //     {
-    //       pixels[row][col].setRed( red );
-    //       pixels[row][col].setBlue( blue );
-    //       pixels[row][col].setGreen( green );
-    //     }
-    //   }
-    // }
 }
 
 function isLandscape(){
