@@ -41,13 +41,13 @@ function readURL(input) {
                    if ( isLandscape() ){
                      console.log("hello");
                       $("#newCanvas").css("display", "block");
-                      $("#opt2").append("Bottom");
-                      $("#opt3").append("Top");
+                      $("#opt2").text("Bottom");
+                      $("#opt3").text("Top");
                    }
                    else{
                      $("#newCanvas").css("display", "inline");
-                     $("#opt2").append("Left");
-                     $("#opt3").append("Right");
+                     $("#opt2").text("Left");
+                     $("#opt3").text("Right");
                    }
 
            };
@@ -69,7 +69,6 @@ function getPosition(event)
    var x = new Number();
    var y = new Number();
    var canvas = document.getElementById("newCanvas");
-
    if (event.x != undefined && event.y != undefined)
    {
      x = event.x;
