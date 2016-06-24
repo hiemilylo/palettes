@@ -135,10 +135,16 @@ function createImage(numBars) {
     //color selection
     for ( var x = 2; x < rows + 2; x++ ){
       if ( isLandscape() ){
-        var imgData = ctx.getImageData(topX*x + parseInt(widthBar/2), topY, 1, 1);
+        // var imgData = ctx.getImageData(topX*x + parseInt(widthBar/2), topY, 1, 1);
+        var randx = Math.floor((Math.random() * c.width) + 1);
+        var randy = Math.floor((Math.random() * c.height) + 1);
+        var imgData = ctx.getImageData( randx, randy, 1, 1)
       }
       else{
-        var imgData = ctx.getImageData(topX, topY*x + parseInt(widthBar/2), 1, 1);
+        var randx = Math.floor((Math.random() * c.width) + 1);
+        var randy = Math.floor((Math.random() * c.height) + 1);
+        var imgData = ctx.getImageData( randx, randy, 1, 1)
+        // var imgData = ctx.getImageData(topX, topY*x + parseInt(widthBar/2), 1, 1);
       }
       var red = imgData.data[0];
       var green = imgData.data[1];
