@@ -118,7 +118,7 @@ function createImage(numBars) {
     var c = document.getElementById("newCanvas");
     var ctx = c.getContext("2d");
     var spacing = 4;
-    var rows = numBars;
+    var rows = parseInt(numBars);
     var widthBar = 75;
     var heightBar = parseInt(c.height/30);
     var topX, topY = 0;
@@ -183,13 +183,13 @@ function createImage(numBars) {
 
     //drawing bars
     if ( isLandscape() ){ //landscape
-      for ( var j = 2; j < rows + 2; j++ ){
+      for ( var j = 2; j < (rows + 2); j++ ){
         ctx.fillStyle = "#" + colors[j-2];
         ctx.fillRect( topX*j - decrement, topY, heightBar, widthBar );
       }
     }
     else { //portrait
-      for ( var j = 2; j < rows + 2; j++ ){
+      for ( var j = 2; j < (rows + 2); j++ ){
         ctx.fillStyle = "#" + colors[j-2];
         ctx.fillRect( topX, topY*j - decrement, widthBar, heightBar );
       }
@@ -198,8 +198,8 @@ function createImage(numBars) {
 
 $('#test').keypress(function(e) {
     if (e.which == 13) {
-        console.log("hi");
-        console.log(this.val);
+        var bars = document.getElementById("test").value;
+        createImage(bars);
     }
 });
 
