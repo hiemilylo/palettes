@@ -196,6 +196,13 @@ function createImage(numBars) {
     }
 }
 
+$('#test').keypress(function(e) {
+    if (e.which == 13) {
+        console.log("hi");
+        console.log(this.val);
+    }
+});
+
 function isLandscape(){
   c = document.getElementById("origCanvas");
   return (c.width > c.height);
